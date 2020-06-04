@@ -1,0 +1,1 @@
+INSERT INTO `user`(`id`, `account_id`, `name`, `token`, `gmt_create`, `gmt_modified`) VALUES (1, 1, "helloWorld", 1, 1, 1);

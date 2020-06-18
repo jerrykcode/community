@@ -5,5 +5,6 @@ CREATE TABLE `user` (
     `name` VARCHAR(50),
     `token` CHAR(36),
     `gmt_create` BIGINT,
-    `gmt_modified` BIGINT
+    `gmt_modified` BIGINT,
+    `bio` VARCHAR(256) NULL
 );

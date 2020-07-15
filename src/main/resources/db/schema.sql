@@ -6,7 +6,8 @@ CREATE TABLE `user` (
     `token` CHAR(36),
     `gmt_create` BIGINT,
     `gmt_modified` BIGINT,
-    `bio` VARCHAR(256) NULL
+    `bio` VARCHAR(256) NULL,
+    `avatar_url` VARCHAR(256) NULL
 );
 
 DROP TABLE IF EXISTS `question`;

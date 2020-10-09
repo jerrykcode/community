@@ -12,7 +12,7 @@ public interface QuestionMapper {
             "values(#{title}, #{description}, #{tag}, #{gmtCreate}, #{gmtModified}, #{creatorId})")
     public void create(Question question);
 
-    @Select("select * from `question`")
+    @Select("select * from `question` limit #{offset}, #{size}")
     @Results(id="questionMap", value={
             @Result(property = "gmtCreate", column = "gmt_create"),
             @Result(property = "gmtModified", column = "gmt_modified"),
@@ -21,5 +21,8 @@ public interface QuestionMapper {
             @Result(property = "viewCount", column = "view_count"),
             @Result(property = "likeCount", column = "like_count")
     })
-    List<Question> list();
+    List<Question> list(@Param("offset") Integer offset, @Param("size") Integer size);
+
+    @Select("select count(1) from `question`")
+    Integer count();
 }

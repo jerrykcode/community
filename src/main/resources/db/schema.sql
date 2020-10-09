@@ -12,7 +12,7 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
-    `id` INT,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(50),
     `description` TEXT,
     `tag` TEXT,

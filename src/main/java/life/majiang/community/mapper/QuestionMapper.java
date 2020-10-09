@@ -21,8 +21,15 @@ public interface QuestionMapper {
             @Result(property = "viewCount", column = "view_count"),
             @Result(property = "likeCount", column = "like_count")
     })
-    List<Question> list(@Param("offset") Integer offset, @Param("size") Integer size);
+    List<Question> findAll(@Param("offset") Integer offset, @Param("size") Integer size);
+
+    @Select("select * from `question` where `creator_id` = #{creator_id} limit #{offset}, #{size}")
+    @ResultMap(value = {"questionMap"})
+    List<Question> findByCreatorId(@Param("offset") Integer offset, @Param("size") Integer size, @Param("creator_id") Integer creatorId);
 
     @Select("select count(1) from `question`")
     Integer count();
+
+    @Select("select count(1) from `question` where `id` = #{id}")
+    Integer countWithCreatorId(@Param("id") Integer id);
 }

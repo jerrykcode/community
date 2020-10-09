@@ -26,12 +26,12 @@ public class IndexController {
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer pageNo,
-                        @RequestParam(name = "size", defaultValue = "5") Integer pageListsNum) {
+                        @RequestParam(name = "size", defaultValue = "5") Integer pageListNum) {
         User user = currentUser.getCurrentUser(request);
         if (user != null)
             request.getSession().setAttribute("user", user);
 
-        PageDTO pageDTO = questionService.list(pageNo, pageListsNum);
+        PageDTO pageDTO = questionService.list(pageNo, pageListNum);
         model.addAttribute("page", pageDTO);
         return "index";
     }

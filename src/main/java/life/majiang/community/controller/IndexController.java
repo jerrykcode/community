@@ -17,9 +17,6 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private CurrentUser currentUser;
-
-    @Autowired
     private QuestionService questionService;
 
     @GetMapping("/")
@@ -27,10 +24,6 @@ public class IndexController {
                         Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                         @RequestParam(name = "size", defaultValue = "5") Integer pageListNum) {
-        User user = currentUser.getCurrentUser(request);
-        if (user != null)
-            request.getSession().setAttribute("user", user);
-
         PageDTO pageDTO = questionService.list(pageNo, pageListNum);
         model.addAttribute("page", pageDTO);
         return "index";

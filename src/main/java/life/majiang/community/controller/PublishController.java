@@ -18,13 +18,10 @@ public class PublishController {
     @Autowired
     private QuestionMapper questionMapper;
 
-    @Autowired
-    private CurrentUser currentUser;
-
     private static int count = 0;
     @GetMapping("/publish")
     public String publish(HttpServletRequest request) {
-        User user = currentUser.getCurrentUser(request);
+        User user = (User) request.getSession().getAttribute("user") ;
         if (user != null)
             request.getSession().setAttribute("user", user);
         return "publish";
@@ -57,7 +54,7 @@ public class PublishController {
             return "publish";
         }
 
-        User user = currentUser.getCurrentUser(request);
+        User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             request.getSession().setAttribute("user", user);
         }

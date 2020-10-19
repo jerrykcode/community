@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ProfileController {
 
     @Autowired
-    private CurrentUser currentUser;
-
-    @Autowired
     QuestionService questionService;
 
     @GetMapping("/profile/{action}")
@@ -36,7 +33,7 @@ public class ProfileController {
             model.addAttribute("sectionName", "最新回复");
         }
 
-        User user = currentUser.getCurrentUser(request);
+        User user = (User) request.getSession().getAttribute("user");
         if (user != null)
             request.getSession().setAttribute("user", user);
         else return "redirect:/";

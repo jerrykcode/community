@@ -36,4 +36,8 @@ public interface QuestionMapper {
     @Select("select * from question where id = #{id}")
     @ResultMap(value = {"questionMap"})
     Question findByQuestionId(@Param("id") Integer id);
+
+    @Update("update question set title = #{title}, description = #{description}, tag = #{tag}, gmt_modified = #{gmtModified} " +
+            "where id = #{id}")
+    void update(Question question);
 }

@@ -69,4 +69,14 @@ public class QuestionService {
         questionDTO.setUser(userMapper.findById(question.getCreatorId()));
         return questionDTO;
     }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null) { //创建
+            questionMapper.create(question);
+        }
+        else { //更新
+            questionMapper.update(question);
+        }
+    }
+
 }

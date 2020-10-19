@@ -61,4 +61,12 @@ public class QuestionService {
         pageDTO.setPagination(questionMapper.countWithCreatorId(creator.getId()), pageNo, pageListNum);
         return pageDTO;
     }
+
+    public QuestionDTO getByQuestionId(Integer id) {
+        Question question = questionMapper.findByQuestionId(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        questionDTO.setUser(userMapper.findById(question.getCreatorId()));
+        return questionDTO;
+    }
 }

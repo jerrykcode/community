@@ -86,7 +86,7 @@ public class PublishController {
         model.addAttribute("title", questionDTO.getTitle());
         model.addAttribute("description", questionDTO.getDescription());
         model.addAttribute("tag", questionDTO.getTag());
-        model.addAttribute("id", questionDTO.getId());
+        model.addAttribute("id", id);
         return "publish";
     }
 }

@@ -5,7 +5,9 @@ import life.majiang.community.dto.QuestionDTO;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
 import life.majiang.community.model.Question;
+import life.majiang.community.model.QuestionExample;
 import life.majiang.community.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,18 +28,18 @@ public class QuestionService {
 
         Integer offset = pageListsNum * (pageNo - 1);
 
-        List<Question> questionList = questionMapper.findAll(offset, pageListsNum);
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, pageListsNum));
         List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
         PageDTO pageDTO = new PageDTO();
         for (Question question : questionList) {
-            User user = userMapper.findById(question.getCreatorId());
+            User user = userMapper.selectByPrimaryKey(question.getCreatorId());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
 
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         pageDTO.setQuestions(questionDTOList);
         pageDTO.setPagination(totalCount, pageNo, pageListsNum);
         return pageDTO;
@@ -46,8 +48,9 @@ public class QuestionService {
     public PageDTO listByCreatorId(Integer pageNo, Integer pageListNum, User creator) {
 
         Integer offset = pageListNum * (pageNo - 1);
-
-        List<Question> questionList = questionMapper.findByCreatorId(offset, pageListNum, creator.getId());
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorIdEqualTo(creator.getId());
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, pageListNum));
         List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
         for (Question question : questionList) {
             QuestionDTO questionDTO = new QuestionDTO();
@@ -58,24 +61,32 @@ public class QuestionService {
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setQuestions(questionDTOList);
-        pageDTO.setPagination(questionMapper.countWithCreatorId(creator.getId()), pageNo, pageListNum);
+
+        pageDTO.setPagination((int)questionMapper.countByExample(questionExample), pageNo, pageListNum);
         return pageDTO;
     }
 
     public QuestionDTO getByQuestionId(Integer id) {
-        Question question = questionMapper.findByQuestionId(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        questionDTO.setUser(userMapper.findById(question.getCreatorId()));
+        questionDTO.setUser(userMapper.selectByPrimaryKey(question.getCreatorId()));
         return questionDTO;
     }
 
     public void createOrUpdate(Question question) {
         if (question.getId() == null) { //创建
-            questionMapper.create(question);
+            questionMapper.insert(question);
         }
         else { //更新
-            questionMapper.update(question);
+            Question updateQuestion = new Question();
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.createCriteria().andIdEqualTo(question.getId());
+            questionMapper.updateByExampleSelective(updateQuestion, questionExample);
         }
     }
 

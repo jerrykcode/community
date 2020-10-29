@@ -13,6 +13,7 @@
                         connectionURL="jdbc:mysql://127.0.0.1:3306/majiang"
                         userId="jerry"
                         password="jerry123">
+            <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
         <javaTypeResolver >

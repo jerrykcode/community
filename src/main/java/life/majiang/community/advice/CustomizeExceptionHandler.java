@@ -16,6 +16,7 @@ public class CustomizeExceptionHandler {
             model.addAttribute("message", ex.getMessage());
         }
         else {
+            ex.printStackTrace();
             model.addAttribute("message", "服务冒烟了，要不然你稍后再试试!!!");
         }
         return new ModelAndView("error");

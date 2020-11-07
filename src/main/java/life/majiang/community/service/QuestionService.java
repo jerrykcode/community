@@ -72,7 +72,7 @@ public class QuestionService {
         return pageDTO;
     }
 
-    public QuestionDTO getByQuestionId(Integer id) {
+    public QuestionDTO getByQuestionId(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -97,12 +97,12 @@ public class QuestionService {
             questionExample.createCriteria().andIdEqualTo(question.getId());
             int updated = questionMapper.updateByExampleSelective(updateQuestion, questionExample);
             if (updated != 1) {
-                throw new CustomizeException("你想更新的问题已经不存在了，要不换个试试?");
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question = new Question();
         question.setId(id);
         question.setViewCount(1);

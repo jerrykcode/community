@@ -1,25 +1,37 @@
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `account_id` VARCHAR(100),
-    `name` VARCHAR(50),
-    `token` CHAR(36),
-    `gmt_create` BIGINT,
-    `gmt_modified` BIGINT,
-    `bio` VARCHAR(256) NULL,
-    `avatar_url` VARCHAR(256) NULL
+DROP TABLE IF EXISTS user;
+CREATE TABLE user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    account_id VARCHAR(100),
+    name VARCHAR(50),
+    token CHAR(36),
+    gmt_create BIGINT,
+    gmt_modified BIGINT,
+    bio VARCHAR(256) NULL,
+    avatar_url VARCHAR(256) NULL
 );
 
-DROP TABLE IF EXISTS `question`;
-CREATE TABLE `question` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `title` VARCHAR(50),
-    `description` TEXT,
-    `tag` TEXT,
-    `gmt_create` BIGINT,
-    `gmt_modified` BIGINT,
-    `creator_id` INT,
-    `comment_count` INT DEFAULT 0,
-    `view_count` INT DEFAULT 0,
-    `like_count` INT DEFAULT 0
+DROP TABLE IF EXISTS question;
+CREATE TABLE question (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50),
+    description TEXT,
+    tag TEXT,
+    gmt_create BIGINT,
+    gmt_modified BIGINT,
+    creator_id BIGINT,
+    comment_count INT DEFAULT 0,
+    view_count INT DEFAULT 0,
+    like_count INT DEFAULT 0
+);
+
+DROP TABLE IF EXISTS comment;
+CREATE TABLE comment(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    parent_id BIGINT NOT NULL,
+    type INT NOT NULL,
+    content VARCHAR(1024),
+    commentator BIGINT NOT NULL,
+    gmt_create BIGINT NOT NULL,
+    gmt_modified BIGINT NOT NULL,
+    like_count BIGINT DEFAULT 0
 );

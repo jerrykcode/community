@@ -46,6 +46,9 @@ public class PublishController {
         if (title == null || title.equals("")) {
             errorMsg = "标题不能为空";
         }
+        else if (title.length() > 50) {
+            errorMsg = "标题不能超过50字符";
+        }
         else if (description == null || description.equals("")) {
             errorMsg = "问题补充不能为空";
         }

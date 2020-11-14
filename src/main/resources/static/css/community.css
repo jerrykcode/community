@@ -17,6 +17,10 @@ body {
     height: 38px;
 }
 
+.media-body {
+    padding-top: 10px;
+}
+
 .text-desc {
     font-size: 12px;
     font-weight: normal;
@@ -34,4 +38,59 @@ body {
 
 .jumbotron {
     margin: 50px;
+}
+
+.question {
+    border-bottom: 5px solid #00ffa9;
+    padding-bottom: 5px;
+}
+
+.question-content {
+    font-size: larger;
+    color: #01aa61;
+}
+
+.question-comment-num {
+    margin-top: 10px;
+    border-bottom: 1px solid #00ffa9
+}
+
+.comment {
+    margin: 10px 0;
+}
+
+.btn-comment {
+    float: right;
+    margin-bottom: 20px;
+}
+
+.comments {
+      border-bottom: 2px solid #00ffa9;
+      margin-bottom: 12px;
+      margin-top: 12px;
+      padding-bottom: 6px;
+}
+
+.comment-post-bar {
+    margin-bottom: 0px;
+    color: #1a2a71;
+}
+
+.thin-hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.menu {
+    color: #999;
+}
+
+.menu .icon {
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .icon:hover {
+    color: #00ffa9;
 }

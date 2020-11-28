@@ -30,6 +30,7 @@ CREATE TABLE comment(
     parent_id BIGINT NOT NULL,
     type INT NOT NULL,
     content VARCHAR(1024),
+    comment_count INT DEFAULT 0,
     commentator BIGINT NOT NULL,
     gmt_create BIGINT NOT NULL,
     gmt_modified BIGINT NOT NULL,

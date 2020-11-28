@@ -25,7 +25,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id")Long id,
                            Model model) {
         QuestionDTO questionDTO = questionService.getByQuestionId(id);
-        List<CommentDTO> commentDTOList = commentService.getByQuestionId(id);
+        List<CommentDTO> commentDTOList = commentService.listByQuestionId(id);
         questionService.incView(id); //累加阅读数
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", commentDTOList);

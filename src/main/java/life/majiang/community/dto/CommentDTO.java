@@ -9,6 +9,7 @@ public class CommentDTO {
     private Long parentId;
     private Integer type;
     private String content;
+    private Integer commentCount;
     private Long commentator;
     private Long gmtCreate;
     private Long gmtModified;

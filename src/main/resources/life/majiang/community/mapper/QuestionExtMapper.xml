@@ -23,6 +23,6 @@
     <update id="incCommentCount" parameterType="life.majiang.community.model.Question">
         update question
         set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

@@ -94,3 +94,7 @@ body {
 .menu .icon:hover {
     color: #00ffa9;
 }
+
+.menu .icon-open {
+    color: #00ffcf
+}

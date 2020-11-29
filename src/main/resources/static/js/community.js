@@ -107,3 +107,36 @@ function collapseComments(e) {
        e.setAttribute("data-collapse", "in");
     }
 }
+
+function showSelectTag() {
+    var err = $("#error");
+    if (err) {
+        err.hide();
+    }
+    $("#select-tag").show();
+}
+
+function selectTag(tag) {
+    var text = $("#tag").val();
+    if (text) {
+        var idx = 0;
+        var flag = true;
+        while (true) {
+            idx = text.indexOf(tag, idx);
+            if (idx == -1) break;
+            if (idx + tag.length == text.length ||
+                text.charAt(idx + tag.length) == ",") {
+                flag = false;
+                break;
+            }
+            idx++;
+        }
+        if (flag == true) {
+            text = text + "," + tag;
+        }
+    }
+    else {
+        text = tag;
+    }
+    $("#tag").val(text);
+}

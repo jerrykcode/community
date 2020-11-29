@@ -55,6 +55,12 @@ body {
     border-bottom: 1px solid #00ffa9
 }
 
+.question-related {
+    color: #34c1ea;
+    text-decoration: none;
+    font-size: 18px;
+}
+
 .comment {
     margin: 10px 0;
 }

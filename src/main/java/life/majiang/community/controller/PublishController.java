@@ -1,9 +1,11 @@
 package life.majiang.community.controller;
 
+import life.majiang.community.cache.TagCache;
 import life.majiang.community.dto.QuestionDTO;
 import life.majiang.community.model.Question;
 import life.majiang.community.model.User;
 import life.majiang.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ public class PublishController {
 
     private static int count = 0;
     @GetMapping("/publish")
-    public String publish(HttpServletRequest request) {
+    public String publish(HttpServletRequest request,
+                            Model model) {
         User user = (User) request.getSession().getAttribute("user") ;
         if (user != null)
             request.getSession().setAttribute("user", user);
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -41,6 +45,7 @@ public class PublishController {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("tags", TagCache.get());
 
         String errorMsg = null;
         if (title == null || title.equals("")) {
@@ -55,6 +60,13 @@ public class PublishController {
         else if (tag == null || tag.equals("")) {
             errorMsg = "标签不能为空";
         }
+        else {
+            String invalid = TagCache.filterValid(tag);
+            if (!StringUtils.isEmpty(invalid)) {
+                errorMsg = "输入非法标签: " + invalid;
+            }
+        }
+
         if (errorMsg != null) {
             model.addAttribute("error", errorMsg);
             return "publish";
@@ -95,6 +107,7 @@ public class PublishController {
         model.addAttribute("description", questionDTO.getDescription());
         model.addAttribute("tag", questionDTO.getTag());
         model.addAttribute("id", id);
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 }

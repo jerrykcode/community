@@ -22,6 +22,7 @@
                 <span th:text="${question.likeCount}"></span>次喜欢
                 <span th:text="${question.viewCount}"></span>次浏览
                 <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:if="${user != null && question.user.id == user.id}"><a th:href="@{'/publish/' + ${question.id}}">编辑</a></span>
             </span>
         </div>
     </div>

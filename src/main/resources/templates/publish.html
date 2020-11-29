@@ -44,14 +44,15 @@
                         <!-- Nav tabs -->
                         <div id="select-tag" style="display: none">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li th:each="tag: ${tags}" role="presentation">
+                                <li th:each="tag, tagStat: ${tags}" role="presentation" th:class="${tagStat.first ? 'active' : ''}">
                                     <a th:href="'#' + ${tag.categoryName}" th:aria-controls="${tag.categoryName}" role="tab" data-toggle="tab" th:text="${tag.categoryName}"></a>
                                 </li>
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane" th:each="tag: ${tags}" th:id="${tag.categoryName}">
+                                <div role="tabpanel" th:each="tag, tagStat: ${tags}" th:class="'tab-pane' + ${tagStat.first ? ' active' : ''}"
+                                     th:id="${tag.categoryName}">
                                     <span class="label label-success" style="margin-right: 4px" th:each="tagName : ${tag.tags}"
                                           th:attr="onclick=|selectTag('${tagName}')|" th:text="${tagName}"></span>
                                 </div>

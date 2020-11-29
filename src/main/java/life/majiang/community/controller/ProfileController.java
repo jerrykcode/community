@@ -34,8 +34,10 @@ public class ProfileController {
         }
 
         User user = (User) request.getSession().getAttribute("user");
-        if (user != null)
+        if (user != null) {
             request.getSession().setAttribute("user", user);
+            model.addAttribute("user", user);
+        }
         else return "redirect:/";
 
         if (action.equals("questions")) {

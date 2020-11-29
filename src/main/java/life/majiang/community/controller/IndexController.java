@@ -26,6 +26,8 @@ public class IndexController {
                         @RequestParam(name = "size", defaultValue = "5") Integer pageListNum) {
         PageDTO pageDTO = questionService.list(pageNo, pageListNum);
         model.addAttribute("page", pageDTO);
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user", user);
         return "index";
     }
 

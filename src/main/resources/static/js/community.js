@@ -117,26 +117,31 @@ function showSelectTag() {
 }
 
 function selectTag(tag) {
-    var text = $("#tag").val();
-    if (text) {
-        var idx = 0;
-        var flag = true;
-        while (true) {
-            idx = text.indexOf(tag, idx);
-            if (idx == -1) break;
-            if (idx + tag.length == text.length ||
-                text.charAt(idx + tag.length) == ",") {
-                flag = false;
-                break;
-            }
-            idx++;
-        }
-        if (flag == true) {
-            text = text + "," + tag;
-        }
-    }
-    else {
-        text = tag;
-    }
-    $("#tag").val(text);
+   var text = $("#tag").val();
+
+   if (text) {
+       var index = 0;
+       var appear = false; //记录tag是否已经作为一个独立的标签出现过
+       while (true) {
+           index = text.indexOf(tag, index); //tag字符串在text中出现的位置
+           if (index == -1) break;
+           //判断text中出现的tag是否是另一个标签的一部分
+           //即tag的前一个和后一个字符都是逗号","或者没有字符时，才说明tag是一个独立的标签
+           if ((index == 0 || text.charAt(index - 1) == ",")
+               && (index + tag.length == text.length || text.charAt(index + tag.length) == ",")
+              ) {
+               appear = true;
+               break;
+           }
+           index++; //用于搜索下一个出现位置
+       }
+       if (!appear) {
+           //若tag没有作为一个独立的标签出现过
+           $("#tag").val(text + ',' + tag);
+      }
+   }
+   else {
+       $("#tag").val(tag);
+   }
+
 }

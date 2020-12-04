@@ -33,7 +33,7 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public PageDTO list(Integer pageNo, Integer pageListsNum) {
+    public PageDTO<QuestionDTO> list(Integer pageNo, Integer pageListsNum) {
 
         Integer offset = pageListsNum * (pageNo - 1);
 
@@ -42,7 +42,7 @@ public class QuestionService {
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample,
                 new RowBounds(offset, pageListsNum));
         List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<QuestionDTO> pageDTO = new PageDTO<>();
         for (Question question : questionList) {
             User user = userMapper.selectByPrimaryKey(question.getCreatorId());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -52,12 +52,12 @@ public class QuestionService {
         }
 
         Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
-        pageDTO.setQuestions(questionDTOList);
+        pageDTO.setTList(questionDTOList);
         pageDTO.setPagination(totalCount, pageNo, pageListsNum);
         return pageDTO;
     }
 
-    public PageDTO listByCreatorId(Integer pageNo, Integer pageListNum, User creator) {
+    public PageDTO<QuestionDTO> listByCreatorId(Integer pageNo, Integer pageListNum, User creator) {
 
         Integer offset = pageListNum * (pageNo - 1);
         QuestionExample questionExample = new QuestionExample();
@@ -71,8 +71,8 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
 
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setQuestions(questionDTOList);
+        PageDTO<QuestionDTO> pageDTO = new PageDTO<>();
+        pageDTO.setTList(questionDTOList);
 
         pageDTO.setPagination((int)questionMapper.countByExample(questionExample), pageNo, pageListNum);
         return pageDTO;

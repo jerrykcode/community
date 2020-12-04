@@ -36,3 +36,16 @@ CREATE TABLE comment(
     gmt_modified BIGINT NOT NULL,
     like_count BIGINT DEFAULT 0
 );
+
+DROP TABLE IF EXISTS notification;
+CREATE TABLE notification(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    outer_id BIGINT NOT NULL,
+    notifier BIGINT NOT NULL,
+    receiver BIGINT NOT NULL,
+    type INT NOT NULL,
+    content VARCHAR(256),
+    gmt_create BIGINT NOT NULL,
+    status INT NOT NULL
+);
+CREATE INDEX receiver ON notification(receiver);

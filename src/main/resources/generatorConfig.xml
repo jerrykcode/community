@@ -44,5 +44,9 @@
         </table>
         <table tableName="comment" domainObjectName="Comment"></table>
 
+        <table tableName="notification" domainObjectName="Notification">
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        </table>
+
     </context>
 </generatorConfiguration>

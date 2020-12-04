@@ -6,7 +6,7 @@
 
 <div th:fragment="question">
 
-    <div class="media" th:each="question : ${page.questions}">
+    <div class="media" th:each="question : ${page.tList}">
         <div class="media-left">
             <a href="#">
                 <img class="media-object img-circle" th:src="${question.user.avatarUrl}">
